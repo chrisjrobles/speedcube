@@ -18,6 +18,19 @@ let solves = loadSolves();
 let scrambleTimeout: ReturnType<typeof setTimeout> | null = null;
 
 const cubeDisplay = document.querySelector<HTMLElement>("#cube-display")!;
+const scrambleText = document.getElementById("scramble-text")!;
+scrambleText.style.cursor = "pointer";
+scrambleText.title = "Click to copy";
+scrambleText.addEventListener("click", () => {
+  if (!currentScramble) return;
+  navigator.clipboard.writeText(currentScramble).then(() => {
+    const original = scrambleText.textContent;
+    scrambleText.textContent = "Copied!";
+    setTimeout(() => {
+      scrambleText.textContent = original;
+    }, 1000);
+  });
+});
 
 function updateScrambleDisplay(scramble: string) {
   currentScramble = scramble;

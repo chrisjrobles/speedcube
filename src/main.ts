@@ -1,6 +1,6 @@
 import "cubing/twisty"; // registers <twisty-player> custom element
 import { generateScramble } from "./scramble";
-import { createTimer, formatTime } from "./timer";
+import { createTimer } from "./timer";
 import { loadSolves, addSolve, deleteSolve, clearAllSolves } from "./store";
 import { computeAllStats } from "./stats";
 import {
@@ -15,6 +15,7 @@ import "./style.css";
 
 let currentScramble = "";
 let solves = loadSolves();
+let scrambleTimeout: ReturnType<typeof setTimeout> | null = null;
 
 const cubeDisplay = document.querySelector<HTMLElement>("#cube-display")!;
 
@@ -25,14 +26,13 @@ function updateScrambleDisplay(scramble: string) {
 }
 
 async function newScramble() {
-  renderScrambleText("Generating...");
   const scramble = await generateScramble();
   updateScrambleDisplay(scramble);
 }
 
 function refreshUI() {
   renderStats(computeAllStats(solves));
-  renderSolvesList(solves, handleDelete);
+  renderSolvesList(solves, handleDelete, updateScrambleDisplay);
 }
 
 function handleDelete(id: string) {
@@ -62,7 +62,9 @@ const timer = createTimer({
     solves = addSolve(solve);
     refreshUI();
     // Auto-generate next scramble after a short delay
-    setTimeout(() => {
+    if (scrambleTimeout) clearTimeout(scrambleTimeout);
+    scrambleTimeout = setTimeout(() => {
+      scrambleTimeout = null;
       timer.reset();
       newScramble();
     }, 300);
@@ -76,7 +78,9 @@ document.getElementById("new-scramble")!.addEventListener("click", () => {
 
 // Custom scramble input
 document.getElementById("apply-scramble")!.addEventListener("click", () => {
-  const input = document.getElementById("custom-scramble-input") as HTMLInputElement;
+  const input = document.getElementById(
+    "custom-scramble-input",
+  ) as HTMLInputElement;
   const value = input.value.trim();
   if (value) {
     updateScrambleDisplay(value);
@@ -84,15 +88,18 @@ document.getElementById("apply-scramble")!.addEventListener("click", () => {
   }
 });
 
-document.getElementById("custom-scramble-input")!.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    document.getElementById("apply-scramble")!.click();
-  }
-});
+document
+  .getElementById("custom-scramble-input")!
+  .addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      document.getElementById("apply-scramble")!.click();
+    }
+  });
 
 // Clear session
 document.getElementById("clear-session")!.addEventListener("click", () => {
   if (solves.length === 0) return;
+  if (!confirm(`Clear all ${solves.length} solves?`)) return;
   clearAllSolves();
   solves = [];
   refreshUI();
@@ -100,4 +107,4 @@ document.getElementById("clear-session")!.addEventListener("click", () => {
 
 // Initialize
 refreshUI();
-newScramble();
+updateScrambleDisplay("U2 D2 F2 B2 L2 R2");

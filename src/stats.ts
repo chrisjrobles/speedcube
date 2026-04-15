@@ -28,9 +28,7 @@ export function averageOfN(solves: Solve[], n: number): number | null {
   if (dnfCount > 1) return null;
 
   // Sort: DNF (null) goes to end as Infinity
-  const sorted = times
-    .map((t) => t ?? Infinity)
-    .sort((a, b) => a - b);
+  const sorted = times.map((t) => t ?? Infinity).sort((a, b) => a - b);
 
   // Drop best and worst
   const trimmed = sorted.slice(1, -1);
@@ -40,7 +38,9 @@ export function averageOfN(solves: Solve[], n: number): number | null {
 
 export function sessionAverage(solves: Solve[]): number | null {
   if (solves.length === 0) return null;
-  const times = solves.map(effectiveTime).filter((t): t is number => t !== null);
+  const times = solves
+    .map(effectiveTime)
+    .filter((t): t is number => t !== null);
   if (times.length === 0) return null;
   return times.reduce((a, b) => a + b, 0) / times.length;
 }

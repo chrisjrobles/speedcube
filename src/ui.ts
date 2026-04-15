@@ -5,17 +5,22 @@ const $ = <T extends HTMLElement>(id: string) =>
   document.getElementById(id) as T;
 
 export function renderStats(stats: Stats): void {
-  $("stat-best").textContent = stats.best !== null ? formatTime(stats.best) : "-";
+  $("stat-best").textContent =
+    stats.best !== null ? formatTime(stats.best) : "-";
   $("stat-ao5").textContent = stats.ao5 !== null ? formatTime(stats.ao5) : "-";
-  $("stat-ao12").textContent = stats.ao12 !== null ? formatTime(stats.ao12) : "-";
-  $("stat-ao100").textContent = stats.ao100 !== null ? formatTime(stats.ao100) : "-";
-  $("stat-avg").textContent = stats.sessionAvg !== null ? formatTime(stats.sessionAvg) : "-";
+  $("stat-ao12").textContent =
+    stats.ao12 !== null ? formatTime(stats.ao12) : "-";
+  $("stat-ao100").textContent =
+    stats.ao100 !== null ? formatTime(stats.ao100) : "-";
+  $("stat-avg").textContent =
+    stats.sessionAvg !== null ? formatTime(stats.sessionAvg) : "-";
   $("stat-count").textContent = String(stats.count);
 }
 
 export function renderSolvesList(
   solves: Solve[],
-  onDelete: (id: string) => void
+  onDelete: (id: string) => void,
+  onSelect: (scramble: string) => void,
 ): void {
   const container = $("solves-list");
   container.innerHTML = "";
@@ -50,7 +55,13 @@ export function renderSolvesList(
     del.className = "solve-delete";
     del.textContent = "\u00d7";
     del.title = "Delete solve";
-    del.addEventListener("click", () => onDelete(solve.id));
+    del.addEventListener("click", (e) => {
+      e.stopPropagation();
+      onDelete(solve.id);
+    });
+
+    row.addEventListener("click", () => onSelect(solve.scramble));
+    row.style.cursor = "pointer";
 
     row.append(index, time, scramble, del);
     container.appendChild(row);

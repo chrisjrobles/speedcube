@@ -240,6 +240,21 @@ button:hover {
   gap: 0.25rem;
 }
 
+#solves-list.scroll-top {
+  mask-image: linear-gradient(to bottom, transparent, black 2rem, black);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 2rem, black);
+}
+
+#solves-list.scroll-bottom {
+  mask-image: linear-gradient(to bottom, black, black calc(100% - 2rem), transparent);
+  -webkit-mask-image: linear-gradient(to bottom, black, black calc(100% - 2rem), transparent);
+}
+
+#solves-list.scroll-top.scroll-bottom {
+  mask-image: linear-gradient(to bottom, transparent, black 2rem, black calc(100% - 2rem), transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 2rem, black calc(100% - 2rem), transparent);
+}
+
 .solve-row {
   display: flex;
   align-items: center;

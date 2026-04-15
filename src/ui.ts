@@ -17,6 +17,15 @@ export function renderStats(stats: Stats): void {
   $("stat-count").textContent = String(stats.count);
 }
 
+function updateScrollFade(el: HTMLElement): void {
+  const threshold = 5;
+  const canScrollUp = el.scrollTop > threshold;
+  const canScrollDown =
+    el.scrollTop + el.clientHeight < el.scrollHeight - threshold;
+  el.classList.toggle("scroll-top", canScrollUp);
+  el.classList.toggle("scroll-bottom", canScrollDown);
+}
+
 export function renderSolvesList(
   solves: Solve[],
   onDelete: (id: string) => void,
@@ -66,6 +75,9 @@ export function renderSolvesList(
     row.append(index, time, scramble, del);
     container.appendChild(row);
   }
+
+  container.onscroll = () => updateScrollFade(container);
+  updateScrollFade(container);
 }
 
 export function renderTimerDisplay(ms: number): void {

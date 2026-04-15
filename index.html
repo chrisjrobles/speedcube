@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Speedcube Timer</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Speedcube Timer</h1>
+    </header>
+
+    <main>
+      <section class="scramble-section">
+        <p id="scramble-text">Generating scramble...</p>
+        <twisty-player
+          id="cube-display"
+          visualization="3D"
+          control-panel="none"
+          background="none"
+          hint-facelets="floating"
+          tempo-scale="4"
+        ></twisty-player>
+        <div class="scramble-controls">
+          <button id="new-scramble">New Scramble</button>
+          <div class="custom-scramble">
+            <input
+              id="custom-scramble-input"
+              type="text"
+              placeholder="Enter custom scramble..."
+            />
+            <button id="apply-scramble">Apply</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="timer-section">
+        <div id="timer-display">0.000</div>
+        <p class="timer-hint">Hold <kbd>Space</kbd> to ready, release to start</p>
+      </section>
+
+      <section class="stats-section">
+        <div class="stats-grid">
+          <div class="stat-item">
+            <span class="stat-label">Best</span>
+            <span class="stat-value" id="stat-best">-</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">ao5</span>
+            <span class="stat-value" id="stat-ao5">-</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">ao12</span>
+            <span class="stat-value" id="stat-ao12">-</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">ao100</span>
+            <span class="stat-value" id="stat-ao100">-</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Avg</span>
+            <span class="stat-value" id="stat-avg">-</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Count</span>
+            <span class="stat-value" id="stat-count">0</span>
+          </div>
+        </div>
+
+        <div class="solves-panel">
+          <div class="solves-header">
+            <h2>Solves</h2>
+            <button id="clear-session">Clear All</button>
+          </div>
+          <div id="solves-list"></div>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

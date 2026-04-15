@@ -295,6 +295,14 @@ button:hover {
   font-family: "SF Mono", "Fira Code", "Consolas", monospace;
 }
 
+.solve-date {
+  color: var(--text-muted);
+  font-size: 0.65rem;
+  white-space: nowrap;
+  flex: 0 0 auto;
+  margin-right: 0.5rem;
+}
+
 .solve-delete {
   background: none;
   border: none;

@@ -60,6 +60,15 @@ export function renderSolvesList(
     scramble.textContent = solve.scramble;
     scramble.title = solve.scramble;
 
+    const date = document.createElement("span");
+    date.className = "solve-date";
+    date.textContent = new Date(solve.timestamp).toLocaleDateString(undefined, {
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+    });
+
     const del = document.createElement("button");
     del.className = "solve-delete";
     del.textContent = "\u00d7";
@@ -72,7 +81,7 @@ export function renderSolvesList(
     row.addEventListener("click", () => onSelect(solve.scramble));
     row.style.cursor = "pointer";
 
-    row.append(index, time, scramble, del);
+    row.append(index, time, scramble, date, del);
     container.appendChild(row);
   }
 

@@ -121,22 +121,6 @@ document.getElementById("clear-session")!.addEventListener("click", () => {
   refreshUI();
 });
 
-// Mock data for testing
-const mockTimes = [
-  72340, 65210, 81450, 69870, 74520, 88310, 63150, 77890, 71060, 84230,
-  67540, 79900,
-];
-const now = Date.now();
-for (let i = 0; i < mockTimes.length; i++) {
-  const solve: Solve = {
-    id: crypto.randomUUID(),
-    time: mockTimes[i],
-    scramble: `R U R' F2 D L' B U2 R D' F L2 U R' B2 D F' L U2 R`,
-    timestamp: now - (mockTimes.length - i) * 60000,
-  };
-  solves = addSolve(solve);
-}
-
 // Mobile placeholder
 if (window.matchMedia("(max-width: 768px)").matches) {
   (document.getElementById("custom-scramble-input") as HTMLInputElement).placeholder = "Enter...";

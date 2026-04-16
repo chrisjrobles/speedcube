@@ -388,7 +388,7 @@ button:hover {
   }
 
   #scramble-text {
-    font-size: 0.8rem;
+    font-size: 1rem;
     white-space: normal;
     word-break: break-word;
     padding: 0.5rem 0.75rem;
@@ -409,6 +409,7 @@ button:hover {
   .custom-scramble {
     flex: 1;
     min-width: 0;
+    gap: 0.5rem;
   }
 
   #custom-scramble-input {

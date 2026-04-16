@@ -59,6 +59,31 @@ export function createTimer(callbacks: TimerCallbacks) {
     }
   }
 
+  // Touch: tap timer area to start/stop
+  function handleTouchStart(e: TouchEvent) {
+    e.preventDefault();
+    if (state === "idle" || state === "stopped") {
+      state = "ready";
+      callbacks.onStateChange(state);
+    } else if (state === "running") {
+      cancelAnimationFrame(rafId);
+      const elapsed = performance.now() - startTime;
+      state = "stopped";
+      callbacks.onStateChange(state);
+      callbacks.onStop(elapsed);
+    }
+  }
+
+  function handleTouchEnd(e: TouchEvent) {
+    e.preventDefault();
+    if (state === "ready") {
+      startTime = performance.now();
+      state = "running";
+      callbacks.onStateChange(state);
+      rafId = requestAnimationFrame(tick);
+    }
+  }
+
   document.addEventListener("keydown", handleKeyDown);
   document.addEventListener("keyup", handleKeyUp);
 
@@ -73,6 +98,11 @@ export function createTimer(callbacks: TimerCallbacks) {
       cancelAnimationFrame(rafId);
       document.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("keyup", handleKeyUp);
+    },
+    /** Attach touch events to an element (e.g. the timer display area) */
+    bindTouch(el: HTMLElement) {
+      el.addEventListener("touchstart", handleTouchStart, { passive: false });
+      el.addEventListener("touchend", handleTouchEnd, { passive: false });
     },
   };
 }

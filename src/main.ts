@@ -84,6 +84,9 @@ const timer = createTimer({
   },
 });
 
+// Bind touch events for mobile
+timer.bindTouch(document.querySelector(".timer-section")!);
+
 // New Scramble button
 document.getElementById("new-scramble")!.addEventListener("click", () => {
   newScramble();

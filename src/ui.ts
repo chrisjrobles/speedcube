@@ -34,6 +34,14 @@ export function renderSolvesList(
   const container = $("solves-list");
   container.innerHTML = "";
 
+  if (solves.length === 0) {
+    const empty = document.createElement("p");
+    empty.className = "solves-empty";
+    empty.textContent = "No solves yet";
+    container.appendChild(empty);
+    return;
+  }
+
   // Show most recent first
   const reversed = [...solves].reverse();
   for (let i = 0; i < reversed.length; i++) {

@@ -42,7 +42,8 @@ header h1 {
 
 main {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  width: 100%;
   grid-template-rows: auto 1fr;
   gap: 2rem;
   padding: 1.5rem;
@@ -218,7 +219,7 @@ button:hover {
 }
 
 .solves-header h2 {
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   font-weight: 600;
 }
 
@@ -241,19 +242,53 @@ button:hover {
   gap: 0.25rem;
 }
 
+.solves-empty {
+  color: var(--text-muted);
+  font-size: 1rem;
+  text-align: center;
+  padding: 1.5rem 0;
+}
+
 #solves-list.scroll-top {
   mask-image: linear-gradient(to bottom, transparent, black 2rem, black);
-  -webkit-mask-image: linear-gradient(to bottom, transparent, black 2rem, black);
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 2rem,
+    black
+  );
 }
 
 #solves-list.scroll-bottom {
-  mask-image: linear-gradient(to bottom, black, black calc(100% - 2rem), transparent);
-  -webkit-mask-image: linear-gradient(to bottom, black, black calc(100% - 2rem), transparent);
+  mask-image: linear-gradient(
+    to bottom,
+    black,
+    black calc(100% - 2rem),
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    black,
+    black calc(100% - 2rem),
+    transparent
+  );
 }
 
 #solves-list.scroll-top.scroll-bottom {
-  mask-image: linear-gradient(to bottom, transparent, black 2rem, black calc(100% - 2rem), transparent);
-  -webkit-mask-image: linear-gradient(to bottom, transparent, black 2rem, black calc(100% - 2rem), transparent);
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 2rem,
+    black calc(100% - 2rem),
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 2rem,
+    black calc(100% - 2rem),
+    transparent
+  );
 }
 
 .solve-row {
@@ -425,9 +460,8 @@ button:hover {
     font-size: 0.8rem;
   }
 
-  /* Solves: two-row stacked layout */
+  /* Solves: grow with content, cap at 50vh */
   #solves-list {
-    min-height: 200px;
     max-height: 50vh;
   }
 
